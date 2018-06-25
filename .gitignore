@@ -1,0 +1,6 @@
+.idea
+.project
+**/node_modules
+**/utils/hfc_module/parts/config/**
+**/e2e_cli/channel-artifacts/**
+/config/connection_profile_local.json
