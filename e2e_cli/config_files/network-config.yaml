@@ -169,7 +169,8 @@ peers:
     url: grpc://localhost:7051
 
     # this URL is used to connect the EventHub and registering event listeners
-    eventUrl: grpcs://localhost:7053
+#    eventUrl: grpcs://localhost:7053
+    eventUrl: grpc://localhost:7053
 
     grpcOptions:
       ssl-target-name-override: peer0.org1.example.com
@@ -178,7 +179,7 @@ peers:
 
   peer1.org1.example.com:
     url: grpc://localhost:8051
-    eventUrl: grpcs://localhost:8053
+    eventUrl: grpc://localhost:8053
     grpcOptions:
       ssl-target-name-override: peer1.org1.example.com
     tlsCACerts:
@@ -186,7 +187,7 @@ peers:
 
   peer0.org2.example.com:
     url: grpc://localhost:9051
-    eventUrl: grpcs://localhost:9053
+    eventUrl: grpc://localhost:9053
     grpcOptions:
       ssl-target-name-override: peer0.org2.example.com
     tlsCACerts:
@@ -194,7 +195,7 @@ peers:
 
   peer1.org2.example.com:
     url: grpc://localhost:10051
-    eventUrl: grpcs://localhost:10053
+    eventUrl: grpc://localhost:10053
     grpcOptions:
       ssl-target-name-override: peer1.org2.example.com
     tlsCACerts:

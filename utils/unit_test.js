@@ -14,6 +14,7 @@ var logger = new (winston.Logger)({
 var g_options = {};
 var fcm = require('./hfc_module/index')(g_options, logger);
 require('./hfc_module/config');
+var helper = require('./hfc_module/parts/helper')(logger);
 
 //test enrollAdmin
 
@@ -35,7 +36,7 @@ optionsUser ={
     uuid: '002',
     ca_url: 'http://localhost:7054',
     ca_name: 'ca.fzu.com-org1',
-    enroll_id: 'User1',
+    enroll_id: 'User2',
     msp_id: 'Org1',
     role: 'client',
     ca_tls_opts: {
@@ -51,8 +52,16 @@ optionsCreateChannel = {
     orgName: 'Org1'
 };
 
+optionsJoinChannel = {
+    channelName: 'fzuchannel',
+    peers: ["peer0.org1.example.com","peer1.org1.example.com"],
+    userName: 'User1',
+    orgName: 'Org1'
+};
+
 // fcm.enrollAdmin(optionsAdmin,function () {});
 // fcm.enrollUser(optionsUser,function () {});
 
-fcm.createChannel(optionsCreateChannel);
-
+// fcm.createChannel(optionsCreateChannel);
+fcm.joinChannel(optionsJoinChannel);
+// helper.getClientForOrg(optionsJoinChannel.orgName, optionsJoinChannel.userName);

@@ -7,6 +7,7 @@ module.exports = function(logger){
     let User = require('fabric-client/lib/User');
     let FabricCaClient = require('fabric-ca-client');
     let path = require('path');
+    let helper = require('./helper')(logger);
     let enrollment = {};
 
 
@@ -19,9 +20,6 @@ module.exports = function(logger){
         msp_id: 'Org1MSP',
         ca_tls_opts: {
             pem: 'ca.org1.example.com-cert.pem'
-            // ssl-target-name-override: 'common name used in pem certificate'
-            // grpc.keepalive_time_ms: <integer in milliseconds>,
-            // grpc.keepalive_timeout_ms: <integer in milliseconds>
         },
         crypto_suite: ''
     };
@@ -29,6 +27,7 @@ module.exports = function(logger){
     //注册Admin用户
     enrollment.enrollAdmin = function(options, cb){
         let fabric_client = new FabricClient();
+        // let fabric_client = helper.getClientForOrg(options.msp_id, options.enroll_id);
         // let fabric_ca_client = null;
         let admin_user = null;
         let kvs_path = path.join(__dirname, 'config/hfc-key-store');
@@ -135,6 +134,7 @@ module.exports = function(logger){
     //注册User用户
     enrollment.enrollUser = function(options, cb){
         let fabric_client = new FabricClient();
+        // let fabric_client = helper.getClientForOrg(options.msp_id, options.enroll_id);
         let kvs_path = path.join(__dirname, 'config/hfc-key-store');
 
         let debug = {

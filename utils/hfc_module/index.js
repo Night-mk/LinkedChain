@@ -6,6 +6,7 @@ module.exports = function (g_options, logger) {
     let fcm = {};
     let enrollment = require('./parts/enrollment')(logger);
     let create_channel = require('./parts/create_channel')(logger);
+    let join_channel = require('./parts/join_channel')(logger);
 
 
     // ------------------------------------------------------------------------
@@ -29,6 +30,12 @@ module.exports = function (g_options, logger) {
         create_channel.createChannel(options.channelName, options.channelConfigPath, options.userName, options.orgName);
     };
 
+    // ------------------------------------------------------------------------
+    // Join Channel Functions
+    // ------------------------------------------------------------------------
+    fcm.joinChannel = function (options) {
+        join_channel.peerJoinChannel(options.channelName, options.peers, options.userName, options.orgName)
+    };
 
     return fcm;
 };
