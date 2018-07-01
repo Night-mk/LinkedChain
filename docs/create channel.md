@@ -156,7 +156,7 @@
     ```powershell
         configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ../channel-artifacts/Org1MSPanchors.tx -channelID $CHANNEL_NAME -asOrg Org1 #注意此处的-asOrg参数是在configtx.yaml中配置的org的整体的id而不是name或者MSPID
         
-        configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ../channel-artifacts/Org2MSPanchors.tx -channelID $CHANNEL_NAME -asOrg Org2MSP
+        configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ../channel-artifacts/Org2MSPanchors.tx -channelID $CHANNEL_NAME -asOrg Org2
     ```
 
 **4.4 构建network-config.yaml文件**

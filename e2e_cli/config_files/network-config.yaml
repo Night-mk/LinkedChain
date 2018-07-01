@@ -120,7 +120,8 @@ organizations:
     # this way. The SDK should allow applications to set the org admin identity via APIs, and only use
     # this route as an alternative when it exists.
     adminPrivateKey:
-      path: ../e2e_cli/channel-artifacts/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/a5f0b34d22356590ccf480d26c392b52725de5de1a84875be92169d34f1ba79f_sk
+#      path: ../e2e_cli/channel-artifacts/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/6cd1df575061dac023e080e3f4a24f0e1daf4ebb561468dcfa6378a7326c8890_sk
+      path: ../e2e_cli/channel-artifacts/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/87f7df6d5ec6e2ca7833a0a5d200c57a57172b3a49fd76df8f159892a1c2978f_sk
     signedCert:
       path: ../e2e_cli/channel-artifacts/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts/Admin@org1.example.com-cert.pem
 
@@ -135,9 +136,9 @@ organizations:
       - peer0.org2.example.com
       - peer1.org2.example.com
     certificateAuthorities:
-      - ca.fzu.com-org1
+      - ca.fzu.com-org2
     adminPrivateKey:
-      path: ../e2e_cli/channel-artifacts/crypto-config/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/keystore/b4af54f2f177b3be8cbdcf4ec2eb92b819a55fff034ddd88b1ffbe0658f6bc92_sk
+      path: ../e2e_cli/channel-artifacts/crypto-config/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/keystore/312cee043e8bbe42bc8402db1f687c405f3a2ce24f6b7455060b0c19f1183441_sk
     signedCert:
       path: ../e2e_cli/channel-artifacts/crypto-config/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/signcerts/Admin@org2.example.com-cert.pem
 
@@ -148,7 +149,7 @@ organizations:
 #
 orderers:
   orderer.example.com:
-    url: grpc://localhost:7050
+    url: grpcs://localhost:7050
 
     # these are standard properties defined by the gRPC library
     # they will be passed in as-is to gRPC client constructor
@@ -166,11 +167,11 @@ orderers:
 peers:
   peer0.org1.example.com:
     # this URL is used to send endorsement and query requests
-    url: grpc://localhost:7051
+    url: grpcs://localhost:7051
 
     # this URL is used to connect the EventHub and registering event listeners
 #    eventUrl: grpcs://localhost:7053
-    eventUrl: grpc://localhost:7053
+    eventUrl: grpcs://localhost:7053
 
     grpcOptions:
       ssl-target-name-override: peer0.org1.example.com
@@ -178,24 +179,24 @@ peers:
       path: ../e2e_cli/channel-artifacts/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
 
   peer1.org1.example.com:
-    url: grpc://localhost:8051
-    eventUrl: grpc://localhost:8053
+    url: grpcs://localhost:8051
+    eventUrl: grpcs://localhost:8053
     grpcOptions:
       ssl-target-name-override: peer1.org1.example.com
     tlsCACerts:
       path: ../e2e_cli/channel-artifacts/crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls/ca.crt
 
   peer0.org2.example.com:
-    url: grpc://localhost:9051
-    eventUrl: grpc://localhost:9053
+    url: grpcs://localhost:9051
+    eventUrl: grpcs://localhost:9053
     grpcOptions:
       ssl-target-name-override: peer0.org2.example.com
     tlsCACerts:
       path: ../e2e_cli/channel-artifacts/crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt
 
   peer1.org2.example.com:
-    url: grpc://localhost:10051
-    eventUrl: grpc://localhost:10053
+    url: grpcs://localhost:10051
+    eventUrl: grpcs://localhost:10053
     grpcOptions:
       ssl-target-name-override: peer1.org2.example.com
     tlsCACerts:
@@ -208,7 +209,7 @@ peers:
 # 如果需要，所有的http,grpc都需要加s表示使用tls
 #
 certificateAuthorities:
-  ca_peerOrg1:
+  ca.fzu.com-org1:
     url: http://localhost:7054
     # the properties specified under this object are passed to the 'http' client verbatim when
     # making the request to the Fabric-CA server
@@ -225,14 +226,14 @@ certificateAuthorities:
     # [Optional] The optional name of the CA.
     caName: ca.fzu.com-org1
 
-#  ca-org2:
-#    url: https://localhost:8054
-#    httpOptions:
-#      verify: false
-#    tlsCACerts:
-#      path: artifacts/channel/crypto-config/peerOrganizations/org2.example.com/ca/ca.org2.example.com-cert.pem
-#    registrar:
-#      - enrollId: admin
-#        enrollSecret: adminpw
-#    # [Optional] The optional name of the CA.
-#    caName: ca-org2
+  ca.fzu.com-org2:
+    url: http://localhost:8054
+    httpOptions:
+      verify: false
+    tlsCACerts:
+      path: ../e2e_cli/channel-artifacts/crypto-config/peerOrganizations/org2.example.com/ca/ca.org2.example.com-cert.pem
+    registrar:
+      - enrollId: admin
+        enrollSecret: adminpw
+    # [Optional] The optional name of the CA.
+    caName: ca.fzu.com-org2

@@ -7,35 +7,50 @@ module.exports = function (g_options, logger) {
     let enrollment = require('./parts/enrollment')(logger);
     let create_channel = require('./parts/create_channel')(logger);
     let join_channel = require('./parts/join_channel')(logger);
+    let install_chaincode = require('./parts/install_chaincode')(logger);
 
 
     // ------------------------------------------------------------------------
     // Enrollment Functions
     // ------------------------------------------------------------------------
-    fcm.enrollAdmin = function (options, cb_done) {
+    fcm.enrollAdmin = async function (options, cb_done) {
         //可能寻求新CA注册，获取CA服务列表
         // let opts = get_ca(options);
-        enrollment.enrollAdmin(options, cb_done);
+        await enrollment.enrollAdmin(options, cb_done);
 
     };
 
-    fcm.enrollUser = function (options, cb_done) {
-        enrollment.enrollUser(options, cb_done);
+    fcm.enrollUser = async function (options, cb_done) {
+        await enrollment.enrollUser(options, cb_done);
     };
 
     // ------------------------------------------------------------------------
     // Create Channel Functions
     // ------------------------------------------------------------------------
-    fcm.createChannel = function (options) {
-        create_channel.createChannel(options.channelName, options.channelConfigPath, options.userName, options.orgName);
+    fcm.createChannel = async function (options) {
+        await create_channel.createChannel(options.channelName, options.channelConfigPath, options.userName, options.orgName);
     };
 
     // ------------------------------------------------------------------------
     // Join Channel Functions
     // ------------------------------------------------------------------------
-    fcm.joinChannel = function (options) {
-        join_channel.peerJoinChannel(options.channelName, options.peers, options.userName, options.orgName)
+    fcm.joinChannel = async function (options) {
+        let message = await join_channel.peerJoinChannel(options.channelName, options.peers, options.userName, options.orgName);
+        return message;
     };
+
+
+    // ------------------------------------------------------------------------
+    // Install ChainCode Functions
+    // ------------------------------------------------------------------------
+    fcm.installChaincode = async function (options) {
+        let message = await install_chaincode.installChaincode(
+            options.peers, options.chaincodeName, options.chaincodePath,
+            options.chaincodeVersion, options.chaincodeType, options.userName, options.orgName
+        );
+        return message;
+    };
+
 
     return fcm;
 };

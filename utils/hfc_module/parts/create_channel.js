@@ -20,12 +20,12 @@ module.exports = function(logger){
      * @param userName
      * @param orgName
      */
-    create_channel.createChannel = function(channelName, channelConfigPath, userName, orgName){
+    create_channel.createChannel = async function(channelName, channelConfigPath, userName, orgName){
         logger.info('[FzuChain]: ==============Creating Channel!==============');
 
         try{
             //初始化一个有org配置的client
-            let client = helper.getClientForOrg(orgName, userName);
+            let client = await helper.getClientForOrg(orgName, userName);
             logger.info('[FzuChain]: Successfully got the fabric client for the organization "%s"', orgName);
 
             //读取.tx通道配置文件
@@ -47,9 +47,11 @@ module.exports = function(logger){
             //根据请求request创建Channel,该请求发给orderer节点
             //由于client已经从配置好的network-config.yaml文件中读取了order信息,所以request中无须添加orderer节点信息
             client.createChannel(request).then((response)=>{
-                logger.info('[FzuChain]: Create Channel Response "%s"', response);
+                logger.info('[FzuChain]: Create Channel Response'+response);
+                console.log(response);
                 if(response && response.status === 'SUCCESS'){
                     logger.info('[FzuChain]: Successfully Create Channel %s !', channelName);
+                    logger.info('[FzuChain]: ==============Creating Channel End!==============');
                     let res = {
                         success: true,
                         message: 'Channel \'' + channelName + '\' created Successfully'
@@ -57,12 +59,14 @@ module.exports = function(logger){
                     return res;
                 }else{
                     logger.error('\n[FzuChain] !!!!!!!!! Failed to create the channel \'' + channelName + '\' !!!!!!!!!\n\n');
+                    logger.info('[FzuChain]: ==============Creating Channel End!==============');
                     throw new Error('Failed to create the channel \'' + channelName + '\'');
                 }
             });
         }catch(err){
             // --- Failure --- //
             logger.error('[FzuChain] Failed to get User enrollment ' + options.uuid, err.stack ? err.stack : err);
+            logger.info('[FzuChain]: ==============Creating Channel End!==============');
             throw new Error('Failed to initialize the channel: %s' + err.toString());
         }
 
