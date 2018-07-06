@@ -67,8 +67,8 @@ optionsInstallChaincode = {
     peers: ["peer0.org1.example.com","peer1.org1.example.com"],
     chaincodeName: 'mycc',
     chaincodePath: 'test1',
-    chaincodeVersion: 'golang',
-    chaincodeType: 'v0',
+    chaincodeVersion: 'v0',
+    chaincodeType: 'golang',
     userName: 'User1',
     orgName: 'Org1'
 };
@@ -88,9 +88,9 @@ optionsInstantiateChaincode = {
 var test = async function(){
     // await fcm.enrollAdmin(optionsAdmin,function () {});
     // await fcm.enrollUser(optionsUser,function () {});
-    // await fcm.createChannel(optionsCreateChannel);
-    // await fcm.joinChannel(optionsJoinChannel);
-    let msg = await fcm.installChaincode(optionsInstallChaincode);
+    // let createchannel = fcm.createChannel(optionsCreateChannel);
+    await fcm.joinChannel(optionsJoinChannel);
+    // let msg = await fcm.installChaincode(optionsInstallChaincode);
     // await fcm.instantiateChaincode(optionsInstantiateChaincode);
 };
 

@@ -27,15 +27,16 @@ module.exports = function (g_options, logger) {
     // ------------------------------------------------------------------------
     // Create Channel Functions
     // ------------------------------------------------------------------------
-    fcm.createChannel = async function (options) {
-        await create_channel.createChannel(options.channelName, options.channelConfigPath, options.userName, options.orgName);
+    fcm.createChannel = function (options) {
+        create_channel.createChannel(options.channelName, options.channelConfigPath, options.userName, options.orgName);
     };
 
     // ------------------------------------------------------------------------
     // Join Channel Functions
     // ------------------------------------------------------------------------
     fcm.joinChannel = async function (options) {
-        await join_channel.peerJoinChannel(options.channelName, options.peers, options.userName, options.orgName);
+        let message = await join_channel.peerJoinChannel(options.channelName, options.peers, options.userName, options.orgName);
+        console.log(message);
         // return message;
     };
 
