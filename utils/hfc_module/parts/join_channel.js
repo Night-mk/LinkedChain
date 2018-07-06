@@ -7,12 +7,12 @@ module.exports = function(logger){
     let util = require('util');
 
     //加入到知道指定channel参数
-    options = {
-        channelName: 'fzuChannel',
-        peers: ["peer0.org1.example.com","peer1.org1.example.com"],
-        userName: 'admin',
-        orgName: 'Org1'
-    };
+    // options = {
+    //     channelName: 'fzuChannel',
+    //     peers: ["peer0.org1.example.com","peer1.org1.example.com"],
+    //     userName: 'admin',
+    //     orgName: 'Org1'
+    // };
 
     /**
      * 将peer节点加入到指定channel
@@ -27,9 +27,9 @@ module.exports = function(logger){
         let error_message = null;
         let all_eventhubs = [];
         try{
-            let client = await helper.getClientForOrg(orgName, userName);
+            var client = await helper.getClientForOrg(orgName, userName);
             //获取指定的channel对象
-            let channel = client.getChannel(channelName);
+            var channel = client.getChannel(channelName);
             if(!channel) {
                 let message = util.format('[FzuChain]: Channel %s was not defined in the connection profile', channelName);
                 logger.error(message);
@@ -112,12 +112,12 @@ module.exports = function(logger){
             let join_promise = channel.joinChannel(peer_join_request);
             // 保存返回结果：提案响应（ProposalResponse）的Promise
             promises.push(join_promise);
-            console.log('test');
+            // console.log('test');
             //获取所有结果数组
             let results = await Promise.all(promises);
-            console.log(results);
+            // console.log(results);
 
-            logger.debug(util.format('[FzuChain]: Join Channel RESPONSE : %j', results));
+            // logger.debug(util.format('[FzuChain]: Join Channel RESPONSE : %j', results));
 
             // 检查所有Promise返回（包括监听事件和发送join请求）
             // 只要有一个结果异常则宣布join channel失败
@@ -136,9 +136,9 @@ module.exports = function(logger){
             // 查看事件中心的消息报告
             for(let i in results) {
                 let event_hub_result = results[i];
-                let event_hub = event_hubs[i];
+                //let event_hub = event_hubs[i];
                 let block_registration_number = block_registration_numbers[i];
-                logger.debug('[FzuChain]: Event results for event hub :%s',event_hub._ep._endpoint.addr);
+                logger.debug('[FzuChain]: Event results for event hub :%s',event_hubs[i]._ep._endpoint.addr);
                 if(typeof event_hub_result === 'string') {
                     logger.debug(event_hub_result);
                 } else {
@@ -146,10 +146,14 @@ module.exports = function(logger){
                     logger.debug(event_hub_result.toString());
                 }
                 // 注销事件监听
-                event_hub.unregisterBlockEvent(block_registration_number);
+                event_hubs[i].unregisterBlockEvent(block_registration_number);
             }
 
             logger.info('[FzuChain]: ==============Peer Join Channel End!==============');
+
+            // let mesg1 = await client.getPeersForOrgOnChannel(channelName);
+            // console.log(mesg1);
+
         }catch(error) {
             logger.error('[FzuChain]: Failed to join channel due to error: ' + error.stack ? error.stack : error);
             error_message = error.toString();
@@ -159,6 +163,8 @@ module.exports = function(logger){
         all_eventhubs.forEach((eventHubs) => {
             eventHubs.disconnect();
         });
+
+        console.log('disconnect allEventhubs');
 
         if (!error_message) {
             let message = util.format(
@@ -170,13 +176,18 @@ module.exports = function(logger){
                 success: true,
                 message: message
             };
-            return res;
+            //return res;
         } else {
             let message = util.format('[FzuChain]: Failed to join all peers to channel. cause:%s',error_message);
             logger.error(message);
             throw new Error(message);
         }
+        console.log('end');
     };
+
+
+
+
 
     return join_channel;
 };

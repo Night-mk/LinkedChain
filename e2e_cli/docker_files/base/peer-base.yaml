@@ -11,7 +11,7 @@ services:
       # bridge network as the peers
       # https://docs.docker.com/compose/networking/
 #      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=${COMPOSE_PROJECT_NAME}_fzuchain
-      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=dockerfiles_fzuchain
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=docker_files_fzuchain
       #- CORE_LOGGING_LEVEL=ERROR
       - CORE_LOGGING_LEVEL=DEBUG
       - CORE_PEER_TLS_ENABLED=true

@@ -73,7 +73,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
 	logger.Info("########### example_cc0 Invoke ###########")
 
 	function, args := stub.GetFunctionAndParameters()
-
+	
 	if function == "delete" {
 		// Deletes an entity from its state
 		return t.delete(stub, args)
