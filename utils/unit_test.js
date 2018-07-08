@@ -85,13 +85,25 @@ optionsInstantiateChaincode = {
     orgName:'Org1'
 };
 
+optionsInvokeChaincode = {
+    peerName: ["peer0.org1.example.com","peer1.org1.example.com"],
+    channelName: 'fzuchannel',
+    chaincodeName: 'mycc',
+    functionName: 'query',
+    args: ['a'],
+    userName: 'User1',
+    orgName: 'Org1'
+};
+
+
 var test = async function(){
     // await fcm.enrollAdmin(optionsAdmin,function () {});
     // await fcm.enrollUser(optionsUser,function () {});
     // let createchannel = fcm.createChannel(optionsCreateChannel);
-    await fcm.joinChannel(optionsJoinChannel);
+    // await fcm.joinChannel(optionsJoinChannel);
     // let msg = await fcm.installChaincode(optionsInstallChaincode);
     // await fcm.instantiateChaincode(optionsInstantiateChaincode);
+    await fcm.invokeChaincode(optionsInvokeChaincode);
 };
 
 test();

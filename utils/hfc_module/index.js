@@ -9,6 +9,7 @@ module.exports = function (g_options, logger) {
     let join_channel = require('./parts/join_channel')(logger);
     let install_chaincode = require('./parts/install_chaincode')(logger);
     let instantiate_chaincode = require('./parts/instantiate_chaincode')(logger);
+    let invoke_chaincode = require('./parts/invoke_chaincode')(logger);
 
     // ------------------------------------------------------------------------
     // Enrollment Functions
@@ -58,6 +59,15 @@ module.exports = function (g_options, logger) {
     fcm.instantiateChaincode = async function (options) {
         await instantiate_chaincode.instantiateChaincode(options.peers,options.channelName, options.chaincodeName, options.chaincodeVersion,
             options.chaincodeType, options.functionName, options.args, options.userName, options.orgName);
+    };
+
+    // ------------------------------------------------------------------------
+    // Invoke ChainCode Functions
+    // ------------------------------------------------------------------------
+    fcm.invokeChaincode = async function (options) {
+        let tx_id = await invoke_chaincode.invokeChaincode(options.peerName, options.channelName, options.chaincodeName,
+            options.functionName, options.args, options.userName, options.orgName);
+        console.log(tx_id);
     };
 
     return fcm;
