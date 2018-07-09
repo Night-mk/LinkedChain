@@ -241,6 +241,7 @@ module.exports = function(logger){
                 }
                 var details = [];
                 for (let i = 0; i < response.chaincodes.length; i++) {
+                    console.log(response.chaincodes[i].id);
                     logger.debug('name: ' + response.chaincodes[i].name + ', version: ' +
                         response.chaincodes[i].version + ', path: ' + response.chaincodes[i].path
                     );

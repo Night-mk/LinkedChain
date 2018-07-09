@@ -42,8 +42,9 @@ module.exports = function(logger){
     };
 
     helper.setupChaincodeDeploy = function() {
-        console.log(__dirname);
+        //console.log(__dirname);
         process.env.GOPATH = path.join(__dirname, '../../../e2e_cli/chaincode');
+        console.log(process.env.GOPATH);
     };
 
     return helper;

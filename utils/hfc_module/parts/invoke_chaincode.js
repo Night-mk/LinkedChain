@@ -55,11 +55,11 @@ module.exports = function (logger) {
                 txId: tx_id
             };
 
-            let results = await channel.sendTransactionProposal(proposalRequest);
+            let proposal_results = await channel.sendTransactionProposal(proposalRequest);
 
             //得到返回的交易提案和提案响应
-            let proposal = results[1];
-            let proposalResponses = results[0];
+            let proposal = proposal_results[1];
+            let proposalResponses = proposal_results[0];
             // let invokeResult = byteToString(proposalResponses[0].payload);
             // logger.info(invokeResult);
             logger.info(proposalResponses[0].payload);

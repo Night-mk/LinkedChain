@@ -12,8 +12,8 @@ module.exports = function(logger){
         peers: ["peer0.org1.example.com","peer1.org1.example.com"],
         chaincodeName: 'mycc',
         chaincodePath: 'test',
-        chaincodeVersion: 'golang',
-        chaincodeType: 'v0',
+        chaincodeVersion: 'v0',
+        chaincodeType: 'golang',
         userName: 'User1',
         orgName: 'Org1'
     };
@@ -56,7 +56,6 @@ module.exports = function(logger){
             // later when we send a transaction to the orederer
             let proposalResponses = results[0];
             console.log(proposalResponses);
-            let proposal = results[1];
 
             // lets have a look at the responses to see if they are
             // all good, if good they will also include signatures
@@ -79,10 +78,12 @@ module.exports = function(logger){
                 error_message = 'Failed to send install Proposal or receive valid response. Response null or status is not 200'
                 logger.error(error_message);
             }
+
         } catch(error) {
             logger.error('Failed to install due to error: ' + error.stack ? error.stack : error);
             error_message = error.toString();
         }
+
 
         if (!error_message) {
             let message = util.format('Successfully install chaincode');
@@ -100,9 +101,6 @@ module.exports = function(logger){
         }
 
     };
-
-
-
 
     return install_chaincode;
 };

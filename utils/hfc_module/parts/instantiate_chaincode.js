@@ -40,10 +40,10 @@ module.exports = function(logger){
             // indicate that admin identity should
             // be used to sign the proposal request.
             // will need the transaction ID string for the event registration later
-            var deployId = tx_id.getTransactionID();
+            let deployId = tx_id.getTransactionID();
 
             // send proposal to endorser
-            var request = {
+            let request = {
                 targets : peers,
                 chaincodeId: chaincodeName,
                 chaincodeType: chaincodeType,
@@ -179,6 +179,7 @@ module.exports = function(logger){
             eh.disconnect();
         });
 
+
         if (!error_message) {
             let message = util.format(
                 'Successfully instantiate chaingcode in organization %s to the channel \'%s\'',
@@ -195,6 +196,6 @@ module.exports = function(logger){
             logger.error(message);
             throw new Error(message);
         }
-    }
+    };
     return instantiate_chaincode;
 };

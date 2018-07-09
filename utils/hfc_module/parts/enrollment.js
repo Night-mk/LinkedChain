@@ -125,7 +125,8 @@ module.exports = function(logger){
 
                 let secret = await fabric_ca_client.register({
                     enrollmentID: options.enroll_id,
-                    affiliation: options.org_name.toLowerCase() + '.department1'
+                    affiliation: options.org_name.toLowerCase() + '.department1',
+                    role: options.role
                 },admin_user);
 
                 options.enroll_secret = secret;
