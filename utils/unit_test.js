@@ -19,32 +19,13 @@ var query_ledger = require('./hfc_module/parts/query_ledger')(logger);
 
 //test enrollAdmin
 optionsAdmin ={
-    uuid: '001',
-    ca_url: 'https://localhost:7054',
-    ca_name: 'ca.fzu.com-org1',
     enroll_id: 'admin',
-    enroll_secret: 'adminpw',
-    msp_id: 'Org1MSP',
-    org_name: 'Org1',
-    ca_tls_opts: {
-        pem: 'ca.org1.example.com-cert.pem'
-    },
-    crypto_suite: {}
+    org_name: 'Org1'
 };
 // test enrollUser
 optionsUser ={
-    uuid: '002',
-    ca_url: 'https://localhost:7054',
-    ca_name: 'ca.fzu.com-org1',
-    enroll_id: 'User1',
-    enroll_secret: '',
-    msp_id: 'Org1MSP',
-    org_name: 'Org1',
-    role: 'user',
-    ca_tls_opts: {
-        pem: 'ca.org1.example.com-cert.pem'
-    },
-    crypto_suite: {}
+    enroll_id: 'User2',
+    org_name: 'Org1'
 };
 //创建channel
 optionsCreateChannel = {
@@ -57,7 +38,6 @@ optionsCreateChannel = {
 optionsJoinChannel = {
     channelName: 'fzuchannel',
     peers: ["peer0.org1.example.com","peer1.org1.example.com"],
-    // peers: ["peer0.org1.example.com"],
     userName: 'admin',
     orgName: 'Org1'
 };
@@ -128,13 +108,13 @@ optionsgetTransactionByID = {
 };
 
 var test = async function(){
-    // await fcm.enrollAdmin(optionsAdmin,function () {});
-    // await fcm.enrollUser(optionsUser,function () {});
+    // let msg = await fcm.enrollAdmin(optionsAdmin,function () {});
+    let msg = await fcm.enrollUser(optionsUser,function () {});
     // let createchannel = fcm.createChannel(optionsCreateChannel);
     // await fcm.joinChannel(optionsJoinChannel);
     // let msg = await fcm.installChaincode(optionsInstallChaincode);
     // await fcm.instantiateChaincode(optionsInstantiateChaincode);
-    await fcm.invokeChaincode(optionsInvokeChaincode2);
+    // await fcm.invokeChaincode(optionsInvokeChaincode2);
     // await query_ledger.getInstalledChaincodes(optionsgetInstalledChaincodes.peer,
     //     optionsgetInstalledChaincodes.channelName, optionsgetInstalledChaincodes.type,
     //     optionsgetInstalledChaincodes.userName, optionsgetInstalledChaincodes.orgName);

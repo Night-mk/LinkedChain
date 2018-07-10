@@ -14,15 +14,63 @@ module.exports = function (g_options, logger) {
     // ------------------------------------------------------------------------
     // Enrollment Functions
     // ------------------------------------------------------------------------
+    /**
+     * options{
+     *  enroll_id: 'admin'
+     *  org_name: 'Org1'(首字母大写)
+     * }
+     * res{
+     *  success: true/false
+     *  message: xxx
+     * }
+     * @param options
+     * @param cb_done
+     * @returns {Promise<*>}
+     */
     fcm.enrollAdmin = async function (options, cb_done) {
         //可能寻求新CA注册，获取CA服务列表
         // let opts = get_ca(options);
-        await enrollment.enrollAdmin(options, cb_done);
-
+        let optionsAdmin ={
+            uuid: '001',
+            ca_name: 'ca.fzu.com-'+options.org_name.toLowerCase(),
+            enroll_id: options.enroll_id,
+            enroll_secret: 'adminpw',
+            msp_id: options.org_name+'MSP',
+            org_name: options.org_name
+        };
+        //返回admin注册成功或者失败的信息
+        let msg = await enrollment.enrollAdmin(optionsAdmin, cb_done);
+        console.log(msg);
+        return msg;
     };
 
+    /**
+     * options{
+     *  enroll_id: 'User1'
+     *  org_name: 'Org1'(首字母大写)
+     * }
+     * res{
+     *  success: true/false
+     *  secret: xxx
+     *  message: xxx
+     * }
+     * @param options
+     * @param cb_done
+     * @returns {Promise<*>}
+     */
     fcm.enrollUser = async function (options, cb_done) {
-        await enrollment.enrollUser(options, cb_done);
+        let optionsUser ={
+            uuid: '002',
+            ca_name: 'ca.fzu.com-'+options.org_name.toLowerCase(),
+            enroll_id: options.enroll_id,
+            enroll_secret: '',
+            msp_id: options.org_name+'MSP',
+            org_name: options.org_name,
+            role: 'user'
+        };
+        let msg = await enrollment.enrollUser(optionsUser, cb_done);
+        console.log(msg);
+        return msg;
     };
 
     // ------------------------------------------------------------------------
@@ -36,8 +84,8 @@ module.exports = function (g_options, logger) {
     // Join Channel Functions
     // ------------------------------------------------------------------------
     fcm.joinChannel = async function (options) {
-        let message = await join_channel.peerJoinChannel(options.channelName, options.peers, options.userName, options.orgName);
-        console.log(message);
+        let msg = await join_channel.peerJoinChannel(options.channelName, options.peers, options.userName, options.orgName);
+        console.log(msg);
         // return message;
     };
 
@@ -46,11 +94,11 @@ module.exports = function (g_options, logger) {
     // Install ChainCode Functions
     // ------------------------------------------------------------------------
     fcm.installChaincode = async function (options) {
-        let message = await install_chaincode.installChaincode(
+        let msg = await install_chaincode.installChaincode(
             options.peers, options.chaincodeName, options.chaincodePath,
             options.chaincodeVersion, options.chaincodeType, options.userName, options.orgName
         );
-        return message;
+        return msg;
     };
 
     // ------------------------------------------------------------------------

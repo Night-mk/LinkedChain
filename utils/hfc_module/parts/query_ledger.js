@@ -11,7 +11,7 @@ module.exports = function(logger){
         args : 'a',
         userName: 'User1',
         orgName: 'Org1'
-    }
+    };
 
     optionsgetBlockByNumber = {
         peer : ["peer0.org1.example.com","peer1.org1.example.com"],
@@ -19,7 +19,7 @@ module.exports = function(logger){
         blockNumber : '1',
         userName: 'User1',
         orgName: 'Org1'
-    }
+    };
 
     optionsgetTransactionByID = {
         peer : ["peer0.org1.example.com","peer1.org1.example.com"],
@@ -27,7 +27,7 @@ module.exports = function(logger){
         trxnID : 'trxnID',
         userName: 'User1',
         orgName: 'Org1'
-    }
+    };
 
     optionsgetBlockByHash = {
         peer : ["peer0.org1.example.com","peer1.org1.example.com"],
@@ -35,14 +35,14 @@ module.exports = function(logger){
         hash : 'hash',
         userName: 'User1',
         orgName: 'Org1'
-    }
+    };
 
     optionsgetChainInfo = {
         peer : ["peer0.org1.example.com","peer1.org1.example.com"],
         channelName : 'fzuchannel',
         userName: 'User1',
         orgName: 'Org1'
-    }
+    };
 
     optionsgetInstalledChaincodes = {
         peer : ["peer0.org1.example.com","peer1.org1.example.com"],
@@ -50,7 +50,7 @@ module.exports = function(logger){
         type : 'installed',
         userName: 'User1',
         orgName: 'Org1'
-    }
+    };
 
     optionsgetinstantiatedChaincodes = {
         peer : ["peer0.org1.example.com","peer1.org1.example.com"],
@@ -58,13 +58,13 @@ module.exports = function(logger){
         type : 'instantiated',
         userName: 'User1',
         orgName: 'Org1'
-    }
+    };
 
     optionsgetChannels = {
         peer : ["peer0.org1.example.com","peer1.org1.example.com"],
         userName: 'User1',
         orgName: 'Org1'
-    }
+    };
 
     // Query on chaincode on target peers
     query_ledger.queryChaincode = async function (peer, channelName, chaincodeName, fcn, args, userName, orgName) {
