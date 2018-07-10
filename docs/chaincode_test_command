@@ -1,0 +1,78 @@
+链码的测试环境和命令(利用fabric自带的网络)
+
+一.环境的部署
+准备工作，把写好的链码放到/GOPATH/src/github.com.hyperledger/fabric-samples/chaincode/Test下(假设自己的目录为Test，写好的go文件为test.go)
+
+1.开启第一个终端来启动网络，采用fabric自带的网络，切换到/GOPATH/src/github.com.hyperledger/fabric-samples/chaincode-docker-devmode
+docker-compose -f docker-compose-simple.yaml up      (-f表示选择后面的文件)
+
+2.开启第二个终端编译和启动链码
+docker exec -it chaincode bash
+
+切换到自己编写的链码目录下
+
+go build编译链码，会生成可执行文件
+
+CORE_PEER_ADDRESS=peer:7051 CORE_CHAINCODE_ID_NAME=mycc:0 ./fzuChainCode   (./fzuChainCode表示自己编译成功的可执行文件)
+
+
+二.再开启一个终端，安装链码、实例化链码和查询链码
+
+1.安装链码
+peer chaincode install -p chaincodedev/chaincode/fzuChainCode -n mycc -v 0
+-p是链码的路径，链码放在/GOPATH/src/github.com.hyperledger/fabric-samples/chaincode/helloworld/fzuChain_cc.go
+-n是链码的名字   -v版本号
+
+2.实例化链码
+peer chaincode instantiate -n mycc -v 0 -c '{"Args":[]}' -C myc 
+-c是参数列表，对应链码中的args[]，-C是通道的名称，实例化本链码时不需要传入任何参数
+
+3.invoke调用链码
+(1)添加申请身份事件
+peer chaincode invoke -C myc -n mycc -v 0 -c '{"Args":["addEvent","a1", "applyIdentity", "zhang1234", "poverty", "apply for poverty", "application passed", "it passed", "c1"]}'
+
+(2)添加申请资金事件
+peer chaincode invoke -C myc -n mycc -v 0 -c '{"Args":["addEvent","b1", "applyFund", "zhang1234", "antiPovertyFund", "10000RMB", "it passed", "it passed", "d1"]}'
+
+(3)添加审批身份事件
+peer chaincode invoke -C myc -n mycc -v 0 -c '{"Args":["addEvent","c1", "checkIdentity", "huang4321", "a1", "it passed"]}'
+
+(4)添加审批资金事件
+peer chaincode invoke -C myc -n mycc -v 0 -c '{"Args":["addEvent","d1", "checkFund", "huang4321", "b1", "it passed"]}'
+
+
+(5)查询事件
+peer chaincode invoke -n mycc -v 0 -c '{"Args":["getEvent", "a1"]}' -C myc
+
+(6)随意查询多个事件
+peer chaincode invoke -n mycc -v 0 -c '{"Args":["getEvents", "c1", "a1", "d1", "b1"]}' -C myc
+["getEvents", "a1", "b1", "c1"]表示查询事件"a1", "b1", "c1"的内容
+
+(7)顺序查询某个范围内多个事件的内容
+peer chaincode invoke -n mycc -v 0 -c '{"Args":["getEventsByRange", "a1", "d1"]}' -C myc
+["getEventsByRange", "a1", "d1"]表示查询事件"a1", "b1", "c1"的内容
+
+(8)删除事件
+peer chaincode invoke -n mycc -v 0 -c '{"Args":["deleteEvent", "a1"]}' -C myc
+
+(9)修改字段值
+peer chaincode invoke -n mycc -v 0 -c '{"Args":["changeApplyStatus", "a1", "applyIdentity", "denied"]}' -C myc
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
