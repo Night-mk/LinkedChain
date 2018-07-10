@@ -4,7 +4,7 @@ module.exports = function(logger){
     let helper = require('./helper')(logger);
 
     optionsqueryChaincode = {
-        peer : ["peer0.org1.example.com","peer1.org1.example.com"],
+        peer : "peer0.org1.example.com",
         channelName : 'fzuchannel',
         chaincodeName: 'mycc',
         fcn : 'query',
@@ -14,7 +14,7 @@ module.exports = function(logger){
     };
 
     optionsgetBlockByNumber = {
-        peer : ["peer0.org1.example.com","peer1.org1.example.com"],
+        peer : "peer0.org1.example.com",
         channelName : 'fzuchannel',
         blockNumber : '1',
         userName: 'User1',
@@ -22,7 +22,7 @@ module.exports = function(logger){
     };
 
     optionsgetTransactionByID = {
-        peer : ["peer0.org1.example.com","peer1.org1.example.com"],
+        peer : "peer0.org1.example.com",
         channelName : 'fzuchannel',
         trxnID : 'trxnID',
         userName: 'User1',
@@ -30,7 +30,7 @@ module.exports = function(logger){
     };
 
     optionsgetBlockByHash = {
-        peer : ["peer0.org1.example.com","peer1.org1.example.com"],
+        peer : "peer0.org1.example.com",
         channelName : 'fzuchannel',
         hash : 'hash',
         userName: 'User1',
@@ -38,14 +38,14 @@ module.exports = function(logger){
     };
 
     optionsgetChainInfo = {
-        peer : ["peer0.org1.example.com","peer1.org1.example.com"],
+        peer : "peer0.org1.example.com",
         channelName : 'fzuchannel',
         userName: 'User1',
         orgName: 'Org1'
     };
 
     optionsgetInstalledChaincodes = {
-        peer : ["peer0.org1.example.com","peer1.org1.example.com"],
+        peer : "peer0.org1.example.com",
         channelName : 'fzuchannel',
         type : 'installed',
         userName: 'User1',
@@ -53,7 +53,7 @@ module.exports = function(logger){
     };
 
     optionsgetinstantiatedChaincodes = {
-        peer : ["peer0.org1.example.com","peer1.org1.example.com"],
+        peer : "peer0.org1.example.com",
         channelName : 'fzuchannel',
         type : 'instantiated',
         userName: 'User1',
@@ -61,7 +61,7 @@ module.exports = function(logger){
     };
 
     optionsgetChannels = {
-        peer : ["peer0.org1.example.com","peer1.org1.example.com"],
+        peer : "peer0.org1.example.com",
         userName: 'User1',
         orgName: 'Org1'
     };
@@ -245,9 +245,12 @@ module.exports = function(logger){
                     logger.debug('name: ' + response.chaincodes[i].name + ', version: ' +
                         response.chaincodes[i].version + ', path: ' + response.chaincodes[i].path
                     );
-                    details.push('name: ' + response.chaincodes[i].name + ', version: ' +
-                        response.chaincodes[i].version + ', path: ' + response.chaincodes[i].path
-                    );
+                    let res_data = {
+                        name: response.chaincodes[i].name,
+                        version: response.chaincodes[i].version,
+                        path: response.chaincodes[i].path
+                    };
+                    details.push(res_data);
                 }
                 return details;
             } else {
