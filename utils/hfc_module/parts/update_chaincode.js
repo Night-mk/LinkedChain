@@ -5,8 +5,9 @@ module.exports = function(logger){
     let path = require('path');
     let helper = require('./helper')(logger);
     let queryledger = require('./query_ledger')(logger);
+    let installChainCode = require('./install_chaincode')(logger);
 
-    optionsInstantiateChaincode = {
+    optionsUpdateChaincode = {
         peers: ["peer0.org1.example.com","peer1.org1.example.com"],
         channelName: 'fzuchannel',
         chaincodeName:'test',
@@ -14,15 +15,15 @@ module.exports = function(logger){
         chaincodeType: 'golang',
         userName: 'User1',
         orgName:'Org1'
-
     };
 
-    update_chaincode.updateChaincode = async function(peers, channelName, chaincodeName, chaincodeVersion,
-                                                                chaincodeType,userName, orgName){
+    //chaincodeType没用
+    update_chaincode.updateChaincode = async function(peers, channelName, chaincodeName, chaincodePath, chaincodeVersion,
+                                                                chaincodeType, userName, orgName){
+
         logger.debug('\n\n============ update chaincode ' + channelName + '============\n');
         var error_message = null;
         var eventhubs_in_use = [];
-
 
         try {
             // first setup the client for this org
@@ -35,8 +36,25 @@ module.exports = function(logger){
                 throw new Error(message);
             }
 
+            //获得当前链码的信息
             let queryResult = await queryledger.getInstalledChaincodes(peers[0],channelName,'installed',userName,orgName);
-            let queryResult_versionaddone = 'v' + (parseInt(queryResult[0].version.substring(1))+1); //v1 --> v2
+            let queryResult_versionaddone = 'v' + (parseInt(queryResult[queryResult.length-1].version.substring(1))+1); //v1 --> v2
+            logger.info("the version is : " + queryResult_versionaddone);
+
+            //安装链码的request
+            let requestInstall = {
+                peers: peers,
+                chaincodeName: chaincodeName,
+                chaincodePath: chaincodePath,
+                chaincodeVersion: queryResult_versionaddone,
+                chaincodeType: chaincodeType,
+                userName: userName,
+                orgName: orgName
+            }
+
+            let msg = await installChainCode.installChaincode(requestInstall.peers, requestInstall.chaincodeName,
+                requestInstall.chaincodePath, requestInstall.chaincodeVersion, requestInstall.chaincodeType
+            , requestInstall.userName, requestInstall.orgName);
 
             var tx_id = client.newTransactionID(true); // Get an admin based transactionID
             // An admin based transactionID will
@@ -53,10 +71,9 @@ module.exports = function(logger){
                 chaincodeVersion: queryResult_versionaddone,
                 txId : tx_id
             };
-            console.log(request);
+            // console.log(request);
 
-
-            let results = await channel.sendUpgradeProposal(request, 60000); //instantiate takes much longer
+            let results = await channel.sendUpgradeProposal(request, 60000); //updates takes much longer
 
             // console.log(results);
             // the returned object has both the endorsement results
@@ -96,7 +113,7 @@ module.exports = function(logger){
                 logger.debug('found %s eventhubs for this organization %s',event_hubs.length, orgName);
                 event_hubs.forEach((eh) => {
                     let updateEventPromise = new Promise((resolve, reject) => {
-                        logger.debug('iupdateEventPromise - setting up event');
+                        logger.debug('updateEventPromise - setting up event');
                         let event_timeout = setTimeout(() => {
                             let message = 'REQUEST_TIMEOUT:' + eh._ep._endpoint.addr;
                             logger.error(message);
@@ -104,16 +121,16 @@ module.exports = function(logger){
                             reject(new Error(message));
                         }, 60000);
                         eh.registerTxEvent(deployId, (tx, code) => {
-                            logger.info('The chaincode instantiate transaction has been committed on peer %s',eh._ep._endpoint.addr);
+                            logger.info('The chaincode updates transaction has been committed on peer %s',eh._ep._endpoint.addr);
                             clearTimeout(event_timeout);
                             eh.unregisterTxEvent(deployId);
 
                             if (code !== 'VALID') {
-                                let message = util.format('The chaincode instantiate transaction was invalid, code:%s',code);
+                                let message = util.format('The chaincode updates transaction was invalid, code:%s',code);
                                 logger.error(message);
                                 reject(new Errorupdate_chaincode(message));
                             } else {
-                                let message = 'The chaincode instantiate transaction was valid.';
+                                let message = 'The chaincode updates transaction was valid.';
                                 logger.info(message);
                                 resolve(message);
                             }
@@ -169,7 +186,7 @@ module.exports = function(logger){
                 logger.debug(error_message);
             }
         } catch (error) {
-            logger.error('Failed to send instantiate due to error: ' + error.stack ? error.stack : error);
+            logger.error('Failed to send updates due to error: ' + error.stack ? error.stack : error);
             error_message = error.toString();
         }
 
@@ -180,7 +197,7 @@ module.exports = function(logger){
 
         if (!error_message) {
             let message = util.format(
-                'Successfully instantiate chaingcode in organization %s to the channel \'%s\'',
+                'Successfully updates chaincode in organization %s to the channel \'%s\'',
                 orgName, channelName);
             logger.info(message);
             // build a response to send back to the REST caller
@@ -188,9 +205,9 @@ module.exports = function(logger){
                 success: true,
                 message: message
             };
-            // return response;
+            return response;
         } else {
-            let message = util.format('Failed to instantiate. cause:%s',error_message);
+            let message = util.format('Failed to updates. cause:%s',error_message);
             logger.error(message);
             throw new Error(message);
         }
