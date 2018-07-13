@@ -32,7 +32,7 @@ optionsUser ={
 optionsCreateChannel = {
     channelName: 'fzuchannel',
     channelConfigPath: '../../../e2e_cli/channel-artifacts/channel.tx',
-    userName: 'User2',
+    userName: 'User1',
     orgName: 'Org1'
 };
 //加入channel
@@ -46,11 +46,11 @@ optionsJoinChannel = {
 //安装链码
 optionsInstallChaincode = {
     peers: ["peer0.org1.example.com","peer1.org1.example.com"],
-    chaincodeName: 'fzu_cc',
+    chaincodeName: 'fzu_ccc',
     chaincodePath: 'fzuChaincode',
     chaincodeVersion: 'v1',
     chaincodeType: 'golang',
-    userName: 'User2',
+    userName: 'User1',
     orgName: 'Org1'
 };
 
@@ -58,32 +58,32 @@ optionsInstallChaincode = {
 optionsInstantiateChaincode = {
     peers : ["peer0.org1.example.com","peer1.org1.example.com"],
     channelName: 'fzuchannel',
-    chaincodeName:'fzu_cc',
+    chaincodeName:'fzu_ccc',
     chaincodeVersion:'v1',
     chaincodeType: 'golang',
     functionName: '',
     args : [],
-    userName: 'User2',
+    userName: 'User1',
     orgName:'Org1'
 };
 //invoke链码
 optionsInvokeChaincode1 = {
     peerName: ["peer0.org1.example.com","peer1.org1.example.com"],
     channelName: 'fzuchannel',
-    chaincodeName: 'fzu_cc',
+    chaincodeName: 'fzu_ccc',
     functionName: 'addEvent',
     args: ["b1", "applyIdentity", "zhang1234", "poverty", "apply for poverty", "passed", "not passed", "c1"],
-    userName: 'User2',
+    userName: 'User1',
     orgName: 'Org1'
 };
 
 optionsInvokeChaincode2 = {
     peerName: ["peer0.org1.example.com","peer1.org1.example.com"],
     channelName: 'fzuchannel',
-    chaincodeName: 'fzu_cc',
+    chaincodeName: 'fzu_ccc',
     functionName: 'getEvents',
     args: ['b1'],
-    userName: 'User2',
+    userName: 'User1',
     orgName: 'Org1'
 };
 
@@ -92,7 +92,7 @@ optionsgetInstalledChaincodes = {
     peer : "peer0.org1.example.com",
     channelName : 'fzuchannel',
     type : 'installed',
-    userName: 'User2',
+    userName: 'User1',
     orgName: 'Org1'
 };
 
@@ -100,7 +100,7 @@ optionsgetTransactionByID = {
     peer : "peer0.org1.example.com",
     channelName : 'fzuchannel',
     trxnID : '40a41b09046c26f5b8ad19c1c912036d31716e824516f867746b4ddd5f094b08',
-    userName: 'User2',
+    userName: 'User1',
     orgName: 'Org1'
 };
 
@@ -109,32 +109,32 @@ optionsgetTransactionByID = {
 //更新链码
 optionsInstallChaincode2 = {
     peers: ["peer0.org1.example.com","peer1.org1.example.com"],
-    chaincodeName: 'fzu_cc',
+    chaincodeName: 'fzu_ccc',
     chaincodePath: 'test2',
     chaincodeVersion: 'v2',
     chaincodeType: 'golang',
-    userName: 'User2',
+    userName: 'User1',
     orgName: 'Org1'
 };
 
 optionsUpdateChaincode = {
     peers: ["peer0.org1.example.com","peer1.org1.example.com"],
     channelName: 'fzuchannel',
-    chaincodeName:'fzu_cc',
+    chaincodeName:'fzu_ccc',
     chaincodePath: 'test2',
     chaincodeVersion:'v3',
     chaincodeType: 'golang',
-    userName: 'User2',
+    userName: 'User1',
     orgName:'Org1'
 };
 
 optionsInvokeChaincode3 = {
     peerName: ["peer0.org1.example.com","peer1.org1.example.com"],
     channelName: 'fzuchannel',
-    chaincodeName: 'fzu_cc',
+    chaincodeName: 'fzu_ccc',
     functionName: 'getEvents',
     args: ['b1'],
-    userName: 'User2',
+    userName: 'User1',
     orgName: 'Org1'
 }
 
@@ -148,16 +148,16 @@ var test = async function(){
     // let msg = await fcm.installChaincode(optionsInstallChaincode);
     // await fcm.instantiateChaincode(optionsInstantiateChaincode);
     // await fcm.invokeChaincode(optionsInvokeChaincode1);
-    // await fcm.invokeChaincode(optionsInvokeChaincode2);
+    await fcm.invokeChaincode(optionsInvokeChaincode2);
 
 
     //第一次更新链码
     // await fcm.updateChaincode(optionsUpdateChaincode);
     // await fcm.invokeChaincode(optionsInvokeChaincode3);
     //
-    await query_ledger.getInstalledChaincodes(optionsgetInstalledChaincodes.peer,
-        optionsgetInstalledChaincodes.channelName, optionsgetInstalledChaincodes.type,
-        optionsgetInstalledChaincodes.userName, optionsgetInstalledChaincodes.orgName);
+    // await query_ledger.getInstalledChaincodes(optionsgetInstalledChaincodes.peer,
+    //     optionsgetInstalledChaincodes.channelName, optionsgetInstalledChaincodes.type,
+    //     optionsgetInstalledChaincodes.userName, optionsgetInstalledChaincodes.orgName);
     // await query_ledger.getTransactionByID(optionsgetTransactionByID.peer,
     //     optionsgetTransactionByID.channelName, optionsgetTransactionByID.trxnID,
     //     optionsgetTransactionByID.userName, optionsgetTransactionByID.orgName);
