@@ -137,7 +137,7 @@ optionsInvokeChaincode3 = {
 var test = async function(){
     // let msg = await fcm.enrollAdmin(optionsAdmin,function () {});
     // let msg = await fcm.enrollUser(optionsUser,function () {});
-    //
+
     // let createchannel = await fcm.createChannel(optionsCreateChannel);
 
     /*
@@ -161,6 +161,7 @@ var test = async function(){
     //     optionsgetTransactionByID.channelName, optionsgetTransactionByID.trxnID,
     //     optionsgetTransactionByID.userName, optionsgetTransactionByID.orgName);
     process.exit(0)
+
 };
 
 test();
