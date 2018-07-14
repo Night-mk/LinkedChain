@@ -1,9 +1,6 @@
 //-------------------------------------------------------------------
 // Unit Test Module
 //-------------------------------------------------------------------
-
-
-
 var winston = require('winston');
 var logger = new (winston.Logger)({
     level: 'debug',
@@ -148,7 +145,7 @@ var test = async function(){
     // let msg = await fcm.installChaincode(optionsInstallChaincode);
     // await fcm.instantiateChaincode(optionsInstantiateChaincode);
     // await fcm.invokeChaincode(optionsInvokeChaincode1);
-    await fcm.invokeChaincode(optionsInvokeChaincode2);
+    // await fcm.invokeChaincode(optionsInvokeChaincode2);
 
 
     //第一次更新链码
