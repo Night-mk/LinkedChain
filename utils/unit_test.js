@@ -43,7 +43,7 @@ optionsJoinChannel = {
 //安装链码
 optionsInstallChaincode = {
     peers: ["peer0.org1.example.com","peer1.org1.example.com"],
-    chaincodeName: 'fzu_ccc',
+    chaincodeName: 'fzu_cc',
     chaincodePath: 'fzuChaincode',
     chaincodeVersion: 'v1',
     chaincodeType: 'golang',
@@ -55,7 +55,7 @@ optionsInstallChaincode = {
 optionsInstantiateChaincode = {
     peers : ["peer0.org1.example.com","peer1.org1.example.com"],
     channelName: 'fzuchannel',
-    chaincodeName:'fzu_ccc',
+    chaincodeName:'fzu_cc',
     chaincodeVersion:'v1',
     chaincodeType: 'golang',
     functionName: '',
@@ -67,7 +67,7 @@ optionsInstantiateChaincode = {
 optionsInvokeChaincode1 = {
     peerName: ["peer0.org1.example.com","peer1.org1.example.com"],
     channelName: 'fzuchannel',
-    chaincodeName: 'fzu_ccc',
+    chaincodeName: 'fzu_cc',
     functionName: 'addEvent',
     args: ["b1", "applyIdentity", "zhang1234", "poverty", "apply for poverty", "passed", "not passed", "c1"],
     userName: 'User1',
@@ -77,7 +77,7 @@ optionsInvokeChaincode1 = {
 optionsInvokeChaincode2 = {
     peerName: ["peer0.org1.example.com","peer1.org1.example.com"],
     channelName: 'fzuchannel',
-    chaincodeName: 'fzu_ccc',
+    chaincodeName: 'fzu_cc',
     functionName: 'getEvents',
     args: ['b1'],
     userName: 'User1',
@@ -101,12 +101,10 @@ optionsgetTransactionByID = {
     orgName: 'Org1'
 };
 
-
-
 //更新链码
 optionsInstallChaincode2 = {
     peers: ["peer0.org1.example.com","peer1.org1.example.com"],
-    chaincodeName: 'fzu_ccc',
+    chaincodeName: 'fzu_cc',
     chaincodePath: 'test2',
     chaincodeVersion: 'v2',
     chaincodeType: 'golang',
@@ -117,9 +115,8 @@ optionsInstallChaincode2 = {
 optionsUpdateChaincode = {
     peers: ["peer0.org1.example.com","peer1.org1.example.com"],
     channelName: 'fzuchannel',
-    chaincodeName:'fzu_ccc',
-    chaincodePath: 'test2',
-    chaincodeVersion:'v3',
+    chaincodeName:'fzu_cc',
+    chaincodePath: 'fzuChaincode',
     chaincodeType: 'golang',
     userName: 'User1',
     orgName:'Org1'
@@ -128,7 +125,7 @@ optionsUpdateChaincode = {
 optionsInvokeChaincode3 = {
     peerName: ["peer0.org1.example.com","peer1.org1.example.com"],
     channelName: 'fzuchannel',
-    chaincodeName: 'fzu_ccc',
+    chaincodeName: 'fzu_cc',
     functionName: 'getEvents',
     args: ['b1'],
     userName: 'User1',
@@ -140,13 +137,18 @@ optionsInvokeChaincode3 = {
 var test = async function(){
     // let msg = await fcm.enrollAdmin(optionsAdmin,function () {});
     // let msg = await fcm.enrollUser(optionsUser,function () {});
-    // let createchannel = fcm.createChannel(optionsCreateChannel);
+    //
+    // let createchannel = await fcm.createChannel(optionsCreateChannel);
+
+    /*
+        一起执行
+     */
     // await fcm.joinChannel(optionsJoinChannel);
     // let msg = await fcm.installChaincode(optionsInstallChaincode);
     // await fcm.instantiateChaincode(optionsInstantiateChaincode);
+
     // await fcm.invokeChaincode(optionsInvokeChaincode1);
     // await fcm.invokeChaincode(optionsInvokeChaincode2);
-
 
     //第一次更新链码
     // await fcm.updateChaincode(optionsUpdateChaincode);
@@ -158,6 +160,7 @@ var test = async function(){
     // await query_ledger.getTransactionByID(optionsgetTransactionByID.peer,
     //     optionsgetTransactionByID.channelName, optionsgetTransactionByID.trxnID,
     //     optionsgetTransactionByID.userName, optionsgetTransactionByID.orgName);
+    process.exit(0)
 };
 
 test();

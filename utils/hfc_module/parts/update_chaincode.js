@@ -18,7 +18,7 @@ module.exports = function(logger){
     };
 
     //chaincodeType没用
-    update_chaincode.updateChaincode = async function(peers, channelName, chaincodeName, chaincodePath, chaincodeVersion,
+    update_chaincode.updateChaincode = async function(peers, channelName, chaincodeName, chaincodePath,
                                                                 chaincodeType, userName, orgName){
 
         logger.debug('\n\n============ update chaincode ' + channelName + '============\n');

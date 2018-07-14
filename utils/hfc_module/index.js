@@ -120,7 +120,7 @@ module.exports = function (g_options, logger) {
     };
 
     fcm.updateChaincode = async function (options) {
-        let tx_id = await update_chaincode.updateChaincode(options.peers, options.channelName, options.chaincodeName, options.chaincodePath, options.chaincodeVersion,
+        let tx_id = await update_chaincode.updateChaincode(options.peers, options.channelName, options.chaincodeName, options.chaincodePath,
             options.chaincodeType, options.userName, options.orgName);
         console.log(tx_id);
     };
